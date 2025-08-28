@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Dicoding Restautant API",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

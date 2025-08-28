@@ -1,0 +1,19 @@
+meta {
+  name: Get Detail of a Restaurant
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{host}}/detail/:id
+  body: none
+  auth: none
+}
+
+params:path {
+  id: {{sample_id}}
+}
+
+settings {
+  encodeUrl: true
+}

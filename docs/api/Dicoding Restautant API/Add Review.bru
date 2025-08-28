@@ -1,0 +1,23 @@
+meta {
+  name: Add Review
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{host}}/review
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "id": ,
+    "name": "Bowo",
+    "review": "B ajah"
+  }
+}
+
+settings {
+  encodeUrl: true
+}
