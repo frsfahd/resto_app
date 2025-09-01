@@ -9,6 +9,7 @@ import 'package:resto_app/provider/detail/review_add_provider.dart';
 import 'package:resto_app/provider/home/resto_list_provider.dart';
 import 'package:resto_app/provider/main/index_nav_provider.dart';
 import 'package:resto_app/provider/search/resto_search_provider.dart';
+import 'package:resto_app/provider/theme_provider.dart';
 import 'package:resto_app/static/navigation_route.dart';
 import 'package:resto_app/style/theme.dart';
 
@@ -16,6 +17,7 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
         ChangeNotifierProvider(create: (context) => IndexNavProvider()),
         Provider(create: (context) => ApiService()),
         ChangeNotifierProvider(
@@ -42,19 +44,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Resto App',
-      theme: RestoTheme.lightTheme,
-      darkTheme: RestoTheme.darkTheme,
-      themeMode: ThemeMode.light,
-      initialRoute: NavigationRoute.mainRoute.name,
+    return Consumer<ThemeProvider>(
+      builder: (context, value, child) => MaterialApp(
+        title: 'Resto App',
+        theme: RestoTheme.lightTheme,
+        darkTheme: RestoTheme.darkTheme,
+        themeMode: value.themeMode,
+        initialRoute: NavigationRoute.mainRoute.name,
 
-      routes: {
-        NavigationRoute.mainRoute.name: (context) => const Main(),
-        NavigationRoute.detailRoute.name: (context) => Detail(
-          resto: ModalRoute.of(context)?.settings.arguments as RestoBrief,
-        ),
-      },
+        routes: {
+          NavigationRoute.mainRoute.name: (context) => const Main(),
+          NavigationRoute.detailRoute.name: (context) => Detail(
+            resto: ModalRoute.of(context)?.settings.arguments as RestoBrief,
+          ),
+        },
+      ),
     );
   }
 }

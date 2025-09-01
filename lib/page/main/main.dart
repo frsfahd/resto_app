@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resto_app/page/home/home.dart';
 import 'package:resto_app/page/search/search.dart';
+import 'package:resto_app/page/setting/setting.dart';
 import 'package:resto_app/provider/main/index_nav_provider.dart';
 
 class Main extends StatelessWidget {
@@ -26,6 +27,11 @@ class Main extends StatelessWidget {
             label: "Search",
             tooltip: "Search",
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings_rounded),
+            label: "Settings",
+            tooltip: "Settings",
+          ),
         ],
       ),
 
@@ -34,6 +40,7 @@ class Main extends StatelessWidget {
           return switch (value.indexBottomNavBar) {
             0 => Home(),
             1 => Search(),
+            2 => Setting(),
             _ => SizedBox.shrink(),
           };
         },

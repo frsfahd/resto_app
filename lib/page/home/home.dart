@@ -75,6 +75,7 @@ class HeaderSection extends StatelessWidget {
       floating: true,
       expandedHeight: 100,
       collapsedHeight: 100,
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsets.fromLTRB(16, 20, 0, 0),
         title: Column(

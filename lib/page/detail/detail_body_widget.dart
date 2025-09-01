@@ -53,9 +53,9 @@ class FancyAppBar extends StatelessWidget {
     return SliverAppBar(
       snap: false,
       pinned: true,
-      foregroundColor: Theme.of(context).colorScheme.onPrimary,
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      foregroundColor: Colors.white,
 
+      backgroundColor: Theme.of(context).colorScheme.onPrimaryFixedVariant,
       expandedHeight: 400,
       collapsedHeight: 80,
 
@@ -66,7 +66,7 @@ class FancyAppBar extends StatelessWidget {
           ),
           child: ColorFiltered(
             colorFilter: ColorFilter.mode(
-              Color.fromRGBO(0, 0, 0, 0.3),
+              Color.fromRGBO(0, 0, 0, 0.1),
               BlendMode.darken,
             ),
             child: Hero(
@@ -86,9 +86,9 @@ class FancyAppBar extends StatelessWidget {
           children: [
             Text(
               resto.name,
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                color: Theme.of(context).colorScheme.onSecondary,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall!.copyWith(color: Colors.white),
             ),
 
             Row(
@@ -97,17 +97,17 @@ class FancyAppBar extends StatelessWidget {
                 const SizedBox.square(dimension: 4),
                 Text(
                   resto.rating.toString(),
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: Theme.of(context).colorScheme.onTertiary,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodySmall!.copyWith(color: Colors.white),
                 ),
                 const SizedBox.square(dimension: 4),
                 Expanded(
                   child: Text(
                     "(${resto.customerReviews.length.toString()} reviews)",
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: Colors.grey.shade400,
-                    ),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodySmall!.copyWith(color: Colors.white70),
                   ),
                 ),
               ],
@@ -155,13 +155,15 @@ SizedBox menuList({
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 2, horizontal: 2),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).colorScheme.tertiaryContainer,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
                         food.name,
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimary,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onTertiaryContainer,
                         ),
                         textAlign: TextAlign.center,
                         softWrap: true,
