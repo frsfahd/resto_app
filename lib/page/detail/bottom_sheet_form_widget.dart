@@ -52,7 +52,10 @@ class _BottomSheetFormWidgetState extends State<BottomSheetFormWidget> {
         if (provider.resultState is ReviewAddLoadedState) {
           // Clear form on success
           _clearForm();
-          provider.resetState();
+          // provider.resetState();
+          if (mounted) {
+            Navigator.pop(context);
+          }
 
           // Show success toast
           Fluttertoast.showToast(

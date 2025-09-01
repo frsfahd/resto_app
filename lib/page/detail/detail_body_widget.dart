@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:resto_app/data/model/customer_review.dart';
 import 'package:resto_app/data/model/resto_detail.dart';
+import 'package:resto_app/provider/detail/resto_detail_provider.dart';
+import 'package:resto_app/provider/detail/review_add_provider.dart';
+import 'package:resto_app/static/review_add_result_state.dart';
 
 class DetailBodyWidget extends StatelessWidget {
   final RestoDetail resto;
@@ -103,11 +107,24 @@ class FancyAppBar extends StatelessWidget {
                 ),
                 const SizedBox.square(dimension: 4),
                 Expanded(
-                  child: Text(
-                    "(${resto.customerReviews.length.toString()} reviews)",
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodySmall!.copyWith(color: Colors.white70),
+                  child: Consumer<ReviewAddProvider>(
+                    builder: (context, value, child) {
+                      return switch (value.resultState) {
+                        ReviewAddLoadingState() => const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                        ReviewAddLoadedState(reviews: var reviews) => Text(
+                          "(${reviews.length.toString()} reviews)",
+                          style: Theme.of(context).textTheme.bodySmall!
+                              .copyWith(color: Colors.white70),
+                        ),
+                        _ => Text(
+                          "(${resto.customerReviews.length.toString()} reviews)",
+                          style: Theme.of(context).textTheme.bodySmall!
+                              .copyWith(color: Colors.white70),
+                        ),
+                      };
+                    },
                   ),
                 ),
               ],
@@ -278,7 +295,20 @@ class HeaderSection extends StatelessWidget {
       children: [
         // const SizedBox.square(dimension: 4),
         // reviews
-        reviewList(context: context, items: resto.customerReviews),
+        Consumer<ReviewAddProvider>(
+          builder: (context, value, child) {
+            return switch (value.resultState) {
+              ReviewAddLoadingState() => const Center(
+                child: CircularProgressIndicator(),
+              ),
+              ReviewAddLoadedState(reviews: var reviews) => reviewList(
+                context: context,
+                items: reviews,
+              ),
+              _ => reviewList(context: context, items: resto.customerReviews),
+            };
+          },
+        ),
 
         const SizedBox.square(dimension: 30),
         // address
