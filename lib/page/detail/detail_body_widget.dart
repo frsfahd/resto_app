@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:resto_app/component/favorite_icon_widget.dart';
 import 'package:resto_app/data/model/customer_review.dart';
+import 'package:resto_app/data/model/resto_brief.dart';
 import 'package:resto_app/data/model/resto_detail.dart';
-import 'package:resto_app/provider/detail/resto_detail_provider.dart';
 import 'package:resto_app/provider/detail/review_add_provider.dart';
 import 'package:resto_app/static/review_add_result_state.dart';
 
@@ -54,6 +55,14 @@ class FancyAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final RestoBrief restoBrief = RestoBrief(
+      id: resto.id,
+      name: resto.name,
+      description: resto.description,
+      pictureId: resto.pictureId,
+      city: resto.city,
+      rating: resto.rating,
+    );
     return SliverAppBar(
       snap: false,
       pinned: true,
@@ -62,6 +71,8 @@ class FancyAppBar extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.onPrimaryFixedVariant,
       expandedHeight: 400,
       collapsedHeight: 80,
+
+      actions: [FavoriteIconWidget(resto: restoBrief)],
 
       flexibleSpace: FlexibleSpaceBar(
         background: ClipRRect(

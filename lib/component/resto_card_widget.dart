@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:resto_app/component/favorite_icon_widget.dart';
 import 'package:resto_app/data/model/resto_brief.dart';
 import 'package:resto_app/static/navigation_route.dart';
 
@@ -97,6 +98,8 @@ class RestoCardWidget extends StatelessWidget {
                 ],
               ),
             ),
+
+            // Expanded(child: FavoriteIconWidget(resto: resto)),
           ],
         ),
       ),

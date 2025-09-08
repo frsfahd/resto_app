@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:resto_app/page/favorite/favorite.dart';
 import 'package:resto_app/page/home/home.dart';
 import 'package:resto_app/page/search/search.dart';
 import 'package:resto_app/page/setting/setting.dart';
@@ -12,6 +13,7 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: context.watch<IndexNavProvider>().indexBottomNavBar,
         onTap: (index) {
           context.read<IndexNavProvider>().setIndexBottomNavBar = index;
@@ -28,6 +30,11 @@ class Main extends StatelessWidget {
             tooltip: "Search",
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.bookmarks_rounded),
+            label: "Favorite",
+            tooltip: "Favorite",
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.settings_rounded),
             label: "Settings",
             tooltip: "Settings",
@@ -40,7 +47,8 @@ class Main extends StatelessWidget {
           return switch (value.indexBottomNavBar) {
             0 => Home(),
             1 => Search(),
-            2 => Setting(),
+            2 => Favorite(),
+            3 => Setting(),
             _ => SizedBox.shrink(),
           };
         },
