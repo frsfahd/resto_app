@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resto_app/data/api/api_service.dart';
 import 'package:resto_app/data/local/local_database_service.dart';
+import 'package:resto_app/data/local/shared_preferences_service.dart';
 import 'package:resto_app/data/model/resto_brief.dart';
 import 'package:resto_app/page/detail/detail.dart';
 import 'package:resto_app/page/main/main.dart';
@@ -12,19 +13,26 @@ import 'package:resto_app/provider/favorite/local_database_provider.dart';
 import 'package:resto_app/provider/home/resto_list_provider.dart';
 import 'package:resto_app/provider/main/index_nav_provider.dart';
 import 'package:resto_app/provider/search/resto_search_provider.dart';
-import 'package:resto_app/provider/theme_provider.dart';
+import 'package:resto_app/provider/setting_provider.dart';
 import 'package:resto_app/static/navigation_route.dart';
 import 'package:resto_app/style/theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => ThemeProvider()),
         ChangeNotifierProvider(create: (context) => IndexNavProvider()),
         ChangeNotifierProvider(create: (context) => FavoriteIconProvider()),
         Provider(create: (context) => ApiService()),
         Provider(create: (context) => LocalDatabaseService()),
+        Provider(create: (context) => SharedPreferencesService(prefs)),
+        ChangeNotifierProvider(
+          create: (context) =>
+              SettingProvider(context.read<SharedPreferencesService>()),
+        ),
         ChangeNotifierProvider(
           create: (context) =>
               LocalDatabaseProvider(context.read<LocalDatabaseService>()),
@@ -53,7 +61,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeProvider>(
+    return Consumer<SettingProvider>(
       builder: (context, value, child) => MaterialApp(
         title: 'Resto App',
         theme: RestoTheme.lightTheme,
