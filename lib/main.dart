@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resto_app/data/api/api_service.dart';
 import 'package:resto_app/data/local/local_database_service.dart';
+import 'package:resto_app/data/local/local_notification_service.dart';
 import 'package:resto_app/data/local/shared_preferences_service.dart';
 import 'package:resto_app/data/model/resto_brief.dart';
 import 'package:resto_app/page/detail/detail.dart';
@@ -29,9 +30,16 @@ void main() async {
         Provider(create: (context) => ApiService()),
         Provider(create: (context) => LocalDatabaseService()),
         Provider(create: (context) => SharedPreferencesService(prefs)),
+        Provider(
+          create: (context) => LocalNotificationService()
+            ..init()
+            ..configureLocalTimeZone(),
+        ),
         ChangeNotifierProvider(
-          create: (context) =>
-              SettingProvider(context.read<SharedPreferencesService>()),
+          create: (context) => SettingProvider(
+            context.read<SharedPreferencesService>(),
+            context.read<LocalNotificationService>(),
+          ),
         ),
         ChangeNotifierProvider(
           create: (context) =>
