@@ -1,8 +1,10 @@
+import 'package:equatable/equatable.dart';
+
 // To parse this JSON data, do
 //
 //     final restoListResponse = restoListResponseFromJson(jsonString);
 
-class RestoBrief {
+class RestoBrief extends Equatable {
   final String id;
   final String name;
   final String description;
@@ -10,7 +12,7 @@ class RestoBrief {
   final String city;
   final double rating;
 
-  RestoBrief({
+  const RestoBrief({
     required this.id,
     required this.name,
     required this.description,
@@ -36,4 +38,7 @@ class RestoBrief {
     "city": city,
     "rating": rating,
   };
+
+  @override
+  List<Object?> get props => [id, name, description, pictureId, city, rating];
 }
